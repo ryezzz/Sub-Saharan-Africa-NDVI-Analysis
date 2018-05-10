@@ -413,7 +413,7 @@ function renderlinechart(data){
         // .on("mouseover", function() { focus.style("display", null); })
         // .on("mouseout", function() { focus.style("display", "none"); })
         .on("click", click)
-        .on("touchmove", click)
+        .on("touchmove", click) 
         .on('mouseover', hover)
 
 
