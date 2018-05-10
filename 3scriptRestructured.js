@@ -412,7 +412,7 @@ function renderlinechart(data){
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         // .on("mouseover", function() { focus.style("display", null); })
         // .on("mouseout", function() { focus.style("display", "none"); })
-        .on("mousemove", click)
+        .on("click", click)
         .on("touchmove", click)
         .on('mouseover', hover)
 
