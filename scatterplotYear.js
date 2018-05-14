@@ -1,39 +1,35 @@
 var parseYear= d3.timeParse("%y");
 var parseMonth = d3.timeParse("%b");
+var humanMonth = d3.timeFormat("%B")
+var humanYear = d3.timeFormat("%y")
+//Reimagined from Nadieh Bremer's veroni overlay scatterplot
 
+
+////////////////////////////////////////////////////////////
+//////////////////////// Set-up ////////////////////////////
+////////////////////////////////////////////////////////////
 
 // //Quick fix for resizing some things for mobile-ish viewers
 var mobileScreen = (window.innerWidth < 500 ? true : false);
 
 //Scatterplot
-var margin2 ={ top: 20, right: 0, bottom:20, left: 40 },
-	width2 = width,
-	height2 = (height)*2;
+var margin2 = {left: window.innerWidth*.1, top: 20, right: 20, bottom: 20},
+	width2 = window.innerWidth* 8.5/10,
+	height2 = window.innerHeight * 2/3;
 
-
-// var baseHeight = window.innerHeight/4.5;
-// var baseWidth = window.innerWidth * .45
-
-var svgScatter = d3.selectAll(".scatterplotWrapperMonths").append("svg")
-			.attr("width", width2)
-			.attr("height", height2);
+var svgScatter2 = d3.selectAll(".scatterplotWrapperYear").append("svg")
+			.attr("width", (width2 + margin2.left + margin2.right))
+			.attr("height", (height2 + margin2.top + margin2.bottom));
 			
-var wrapper = svgScatter.append("g").attr("class", "chordWrapperYear")
+var wrapper2 = svgScatter2.append("g").attr("class", "chordWrapperYear")
 
 			.attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
 
 
+	
+function renderScatterplot(data){
 
-// var minResponsive = 795
-// var baseHeight = window.innerHeight / 3.6;
-// var baseWidth = window.innerWidth * .57
-// var width = baseWidth;
-// var height = responsive.height(baseHeight);
-// var margin = { top: 0, right: 0, bottom: 0, left: 40 }
-
-
-function renderScatterplotMonths(data){
-
+console.log(data)
 //////////////////////////////////////////////////////
 ///////////// Initialize Axes & Scales ///////////////
 //////////////////////////////////////////////////////
@@ -46,53 +42,43 @@ var color = d3.scaleQuantize()
     .domain(d3.extent(data, function(d) { return d.ndvi}))
     .range(['#ff0000','#ff0000', '#fcdb00', '#8cdd00', '#31b201',
       '#079401', '#008400', '#036301', '#012e01', '#011301']);
-
-console.log(d3.extent(data, function(d) { return d.year}))							 
+							 
 //Set the new x axis range
 var xScale = d3.scaleTime()
-	.range([-1, width2-50])
+	.range([0, width2])
 	.domain(d3.extent(data, function(d) { return d.year})); //I prefer this exact scale over the true range and then using "nice"
 	//.domain(d3.extent(countries, function(d) { return d.GDP_perCapita; }))
 	//.nice();
 //Set new x-axis
-
-
-
 var xAxis = d3.axisBottom()
-// .ticks(100)
-	// .ticks(data, function(d) { return d.year.length})
-	.scale(xScale)
-	.ticks(26)
-	.tickSize(height2)
+	.ticks(21)
 // 	.tickFormat(function (d) {
 // 		return xScale.tickFormat((mobileScreen ? 4 : 8),function(d) { 
 // 			var prefix = d3.formatPrefix(d); 
 // 			return "$" + prefix.scale(d) + prefix.symbol;
 // 		})(d);
 // 	})	
-	;	
+	.scale(xScale);	
 //Append the x-axis
-wrapper.append("g")
-	.attr("class", "x axis")
-	.attr("transform", "translate(" + margin2.left/2+ "," + 0 + ")")
+wrapper2.append("g")
+	.attr("class", "x axisb")
+	.attr("transform", "translate(" + 0 + "," + height2 + ")")
 	.call(xAxis);
 
-var humanMonth = d3.timeFormat("%b")
+var humanMonth = d3.timeFormat("%B")
 
 //Set the new y axis range
 var yScale = d3.scaleTime()
-	.rangeRound([height2-30,0])
+	.rangeRound([height2,1])
 	.domain([parseMonth("Jan"), parseMonth("Dec")])
 	// .nice();
 	
 var yAxis = d3.axisLeft()
 	.ticks(12)  //Set rough # of ticks
-	.tickFormat(d3.timeFormat("%b"))
 	.scale(yScale);	
 //Append the y-axis
-wrapper.append("g")
-		.attr("class", "y axis")
-		
+wrapper2.append("g")
+		.attr("class", "y axisb")
 		.attr("transform", "translate(" + 0 + "," + 0 + ")")
 		.call(yAxis);
 		
@@ -107,22 +93,18 @@ var rScale = d3.scaleLinear()
 ////////////////////////////////////////////////////////////	
 
 //Initiate a group element for the circles	
-var rectGroup = wrapper.append("g")
-	.attr("class", "rectGroup")
+var rectGroup = wrapper2.append("g")
+	.attr("class", "rectGroupb"); 
 	
-
- .attr("transform", "translate(" + margin2.left/2 + "," + 0 + ")")
-
+	
+	var humanMonth = d3.timeFormat("%B")
 	var humanYear = d3.timeFormat("%Y")
 
 //Place the country circles
-rectGroup.selectAll(".months")
+rectGroup.selectAll(".years")
 	.data(data) //Sort so the biggest circles are below
 	.enter().append("rect")
-		.attr("class", function(d,i) {
-			
-			console.log(humanMonth(d.month))
-			return "months" + humanMonth(d.month) + "_" + humanYear(d.year) + "y"; })
+		.attr("class", function(d,i) {return "years" + humanMonth(d.month) + "_" + humanYear(d.year) + "y"; })
 		.style("opacity", opacityCircles)
 		.style("fill", function(d) {return color(d.ndvi);})
 		.attr("x", function(d) {return (xScale(d.year))-(rScale(d.monthSatelliteCount)/2);})
@@ -138,8 +120,8 @@ var voronoi = d3.voronoi()
 				.extent([[0, 0], [width2+40, height2+40]])
 
 				
-var voronoiGroup = wrapper.append("g")
-				.attr("class", "voronoi");
+var voronoiGroup = wrapper2.append("g")
+				.attr("class", "voronoiMonths");
 
 
 
@@ -151,7 +133,7 @@ voronoiGroup.selectAll("path")
 					.style('fill', 'none')
 					.style('stroke-width', '0px')
 					.style('stroke', 'white')
-					.attr("transform", "translate(" + 0 + "," + -20+ ")")
+					.attr("transform", "translate(" + -20 + "," + -20+ ")")
 					.attr("d", function(d) {
 						return d ? "M" + d.join("L") + "Z" : null; })
 					.style("pointer-events", "all")
@@ -171,22 +153,20 @@ voronoiGroup.selectAll("path")
 
 
 function showTooltip (d) {
+	console.log(d3.event.pageX)
 	var newData= d.data;
-	var thisClass = ".months" + humanMonth(d.data.month) + "_" + humanYear(d.data.year) + "y";
+	var thisClass = ".years" + humanMonth(d.data.month) + "_" + humanYear(d.data.year) + "y";
 	d3.selectAll(thisClass)
-		.style('opacity', 1)
 		.style("fill", function(d) {return "white";})
 	d3.selectAll('.scatterTooltip')
-		 .style("left", (d3.event.pageX-450) + "px")
-      .style("top", (d3.event.pageY) + "px")
 		.html(humanMonth(d.data.month) + ", "+ humanYear(d.data.year) + "&nbsp there were " + newData.monthSatelliteCount + " satellites")
-		
+
 }
 
 function hideTooltip (d) {
-	var thisClass = ".months" + humanMonth(d.data.month) + "_" + humanYear(d.data.year) + "y";
+	var thisClass = ".years" + humanMonth(d.data.month) + "_" + humanYear(d.data.year) + "y";
 	d3.selectAll(thisClass)
-		var thisClass = ".months" + humanMonth(d.data.month) + "_" + humanYear(d.data.year) + "y";
+		var thisClass = ".years" + humanMonth(d.data.month) + "_" + humanYear(d.data.year) + "y";
 			d3.selectAll(thisClass)
 			.style("fill", function(d) {return color(d.ndvi);})
 			
@@ -232,7 +212,7 @@ d3.csv("data/malawi_landsat_5_7_8_1990-2018.csv").then(function(data) {
     sortDataByYearMean.forEach(function(d){
 
             var object = new Object();
-            object.month = "jan"
+            object.month = 10
             object.year = parseYear(d.key)
             object.monthSatelliteCount = d.value.count
             object.ndvi = d.value.avg
@@ -254,20 +234,20 @@ d3.csv("data/malawi_landsat_5_7_8_1990-2018.csv").then(function(data) {
     
 //I'm re-organizing my data to make it more readable to me: re-title object key names to make more flexible
    
-    var sortDataByMonthMeanArray = []
-    sortDataByMonthMean.forEach(function(d){
+    // var sortDataByMonthMeanArray = []
+    // sortDataByMonthMean.forEach(function(d){
 
-        d.values.forEach(function(values){
-            var object = new Object();
-            object.year = parseYear(d.key)
-            object.month = parseMonth(values.key)
-            object.monthSatelliteCount = values.value.count
-            object.ndvi = values.value.avg
-            sortDataByMonthMeanArray.push(object);
-        });
+    //     d.values.forEach(function(values){
+    //         var object = new Object();
+    //         object.year = parseYear(d.key)
+    //         object.month = parseMonth(values.key)
+    //         object.monthSatelliteCount = values.value.count
+    //         object.ndvi = values.value.avg
+    //         sortDataByMonthMeanArray.push(object);
+    //     });
 
-    });
+    // });
     
-    renderScatterplotMonths(sortDataByMonthMeanArray);
+    renderScatterplot(sortDataByYearMeanArray);
 
 });

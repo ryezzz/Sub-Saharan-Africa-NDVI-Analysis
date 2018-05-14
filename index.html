@@ -3,14 +3,14 @@
 <!--<script type="text/javascript" src="script.js"></script>-->
 
 <head>
-
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Catamaran:200,400,600" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,400,600" rel="stylesheet">
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/d3-time.v1.min.js"></script>
     <script src="https://d3js.org/d3-time-format.v2.min.js"></script>
     <script src="https://rawgit.com/susielu/d3-annotation/master/d3-annotation.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:100,300" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
 
@@ -18,58 +18,71 @@
 </head>
 
 <body>
-
+<div class = "openingOverlay">
+    <div class = "openingText">
+        <p class = 'paragraph'> The following visualization analyzes 5,342 satellite images in order to see the relationship between agricultural subsidies, vegitation, GDP and productivity in Malawi, Africa.</p>
+        
+        <p class = 'paragraph'>It was created under the advisement of the UNDP Regional Beureau of Africa and with the use of Google Earth Engine.</p>
+        
+        <p class = 'paragraph'>This will eventually be an exploratory tool useful for policymakers which includes all sub-Saharan Africa.</p>
+    </div>       
+                    <!--<i class='fas fa-info-circle'></i>-->
+</div>
     <span class="mapTitle">Vegetation index (NDVI)</span>
     <span class="mapTitle" id="mapTitleDate">2004</span>
-   
-    <div class="imagesContainer"></div>
-    <div class="scatterTooltip"></div>
+
+
+    
+    <div class="imagesContainer">
+
+
+
+
+    </div>
     <!--<div class = "dataSummary">This is a data summary</div>-->
     <div class="chartsContainer">
-        <div class="title">
-            Socioeconomic and Vegetation Shifts in Malawi.
-        </div>
-    <div class = "annotation">
-        
+          <div class="title">
+        Socioeconomic and Vegetation Shifts in Malawi.
     </div>
-        <div class="mapLabelSub">
-            NDVI, GDP per capita growth anual percentage, and ariculture value added per worker.
-        </div>
+
+    <div class="mapLabelSub">
+    NDVI, GDP per capita growth anual percentage, and ariculture value added per worker.
+    </div>
+
 
         <div>
-             <div class = 'buttons'>
-                 <button id = "stop" class = 'fas fa-stop'></button>
-            <button id = "start" class = 'fas fa-play'></button>
-            
+
+            <div class="stickyheader">
+                <div class="buttons2">
+                    <!--<button class = 'combineCharts'>Combine Charts</button>-->
+                </div>
+                <div class='buttons'>
+                    <button id="stop" class='fas fa-stop'></button>
+                    <button id="start" class='fas fa-play'></button>
+
+                </div>
+                <input type="range" class="dateRange" id="timeSlider" min="1991" max="2017" step="1">
+                <div class="dateRangeTicks">
+                </div>
             </div>
-            <input type="range" class="dateRange" id="timeSlider" min="1991" max="2017" step="1" width="100%">
-            <output id="output"></output>
-            <div class = "dateRangeTicks"></div>
-                <script type="text/javascript" src="3scriptRestructured.js"></script>
-                <!--<script type="text/javascript" src="scatterplot.js"></script>-->
 
-
+            <div class="lineChartsDiv">
+                <i class='fas fa-info-circle'></i>
+            </div>
+            <script type="text/javascript" src="3scriptRestructured.js"></script>
+            <!--<script type="text/javascript" src="scatterplot.js"></script>-->
         </div>
+        <div class="scatterplotWrapper">
+            <div class="scatterplotTitle"></div>
+            <div class="scatterTooltip"></div>
+            <div class="scatterplotWrapperMonths"></div>
+            <script type="text/javascript" src="scatterplot.js"></script>
+        </div>
+
     </div>
-    
-    <div class = "scatterplotWrapper">
-             <div class = "scatterplotTitle">How was Normalized Vegetation Index Calculated?</div>
-             <div class = "scatterplotSubTitle">How was Normalized Vegetation Index Calculated?</div>
 
-                <script type="text/javascript" src="scatterplot.js"></script>
-åå
-
-                    <div class = "paragraph">
-
-                    </div>
-    
-                    <div class = "scatterplotsidebar"></div>
-            
-            
-            
-        </div>        <!--<script type="text/javascript" src="3scriptRestructured.js"></script>-->
+    <!--<script type="text/javascript" src="3scriptRestructured.js"></script>-->
 </body>
-
 
 
 </html>
