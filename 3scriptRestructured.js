@@ -143,9 +143,9 @@ function renderSlider(data) {
 
     var tickAxis = d3.selectAll(".dateRangeTicks").append('svg')
         .attr('width', width)
-        .attr('height', 14)
+        .attr('height', 15)
     var axisx = tickAxis.append('g')
-        .attr("transform", "translate(" + margin.left + "," + -4 + ")")
+        .attr("transform", "translate(" + margin.left + "," + -3 + ")")
         .attr('class', 'timelineTicks')
         .call(d3.axisBottom(x).ticks(responsive.ticks(data.length)).tickFormat(d3.timeFormat("%y")).tickSize(0));
     axisx.selectAll("line")

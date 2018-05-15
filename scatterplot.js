@@ -50,7 +50,7 @@ var color = d3.scaleQuantize()
 console.log(d3.extent(data, function(d) { return d.year}))							 
 //Set the new x axis range
 var xScale = d3.scaleTime()
-	.range([-1, width2-50])
+	.range([0, width2-(margin2.left+25)])
 	.domain(d3.extent(data, function(d) { return d.year})); //I prefer this exact scale over the true range and then using "nice"
 	//.domain(d3.extent(countries, function(d) { return d.GDP_perCapita; }))
 	//.nice();
@@ -77,6 +77,8 @@ wrapper.append("g")
 	.attr("transform", "translate(" + margin2.left/2+ "," + 0 + ")")
 	.call(xAxis);
 
+
+
 var humanMonth = d3.timeFormat("%b")
 
 //Set the new y axis range
@@ -89,11 +91,16 @@ var yAxis = d3.axisLeft()
 	.ticks(12)  //Set rough # of ticks
 	.tickFormat(d3.timeFormat("%b"))
 	.scale(yScale);	
+	
+
 //Append the y-axis
 wrapper.append("g")
 		.attr("class", "y axis")
-		
-		.attr("transform", "translate(" + 0 + "," + 0 + ")")
+		.attr('text-anchor', "end")
+		// .attr("y", 10)
+  //      .attr("x", 50)
+        .attr("dy", "1em")
+		.attr("transform", "translate(" + 15 + "," + 0 + ")")
 		.call(yAxis);
 		
 //Scale for the bubble size
@@ -105,7 +112,17 @@ var rScale = d3.scaleLinear()
 ////////////////////////////////////////////////////////////	
 /////////////////// Scatterplot Rect ////////////////////
 ////////////////////////////////////////////////////////////	
-
+var titleText = wrapper.append('g')
+		.append('text')
+        .attr("class", 'chartText')
+        .attr("id", 'chartText'+data[0].class)
+        .html("Satellite Images by Month")
+        .style("text-anchor", "middle")
+        .attr('dx', "-160")
+        .attr("dy", "-30")
+        .attr("transform", function() {
+            return "rotate(-90)"
+        })
 //Initiate a group element for the circles	
 var rectGroup = wrapper.append("g")
 	.attr("class", "rectGroup")
@@ -149,6 +166,8 @@ voronoiGroup.selectAll("path")
 					.append('g')
 					.append("path")
 					.style('fill', 'none')
+					.style('opacity', '0')
+					.style('background-color', 'rgba(0,0,0,0)')
 					.style('stroke-width', '0px')
 					.style('stroke', 'white')
 					.attr("transform", "translate(" + 0 + "," + -20+ ")")
@@ -169,6 +188,7 @@ voronoiGroup.selectAll("path")
 					// .on("mouseout",  removeTooltip);
 				// .attr("transform", "translate(" + -10 + "," + -10 + ")")
 
+var formatNum = d3.format(".1f")
 
 function showTooltip (d) {
 	var newData= d.data;
@@ -177,9 +197,10 @@ function showTooltip (d) {
 		.style('opacity', 1)
 		.style("fill", function(d) {return "white";})
 	d3.selectAll('.scatterTooltip')
-		 .style("left", (d3.event.pageX-450) + "px")
+		.style('background-color', 'rgba(0,0,0,.8)')
+		 .style("left", (d3.event.pageX-700) + "px")
       .style("top", (d3.event.pageY) + "px")
-		.html(humanMonth(d.data.month) + ", "+ humanYear(d.data.year) + "&nbsp there were " + newData.monthSatelliteCount + " satellites")
+		.html(humanMonth(d.data.month) + ", "+ humanYear(d.data.year) + "</br> " + newData.monthSatelliteCount + " satellite images."  + "</br> " + "NDVI: " + formatNum(newData.ndvi))
 		
 }
 
