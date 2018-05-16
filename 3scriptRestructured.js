@@ -63,7 +63,7 @@ function loopThrough(year) {
                 .select('line') //grab the tick line
                 .attr('class', 'not') //style with a custom class and CSS
                 .style('stroke', 'white')
-                .style('stroke-width', .1);
+                .style('stroke-width', .1 + 'px');
 
             d3.selectAll('g.tick')
                 .filter(function(d) {
@@ -73,7 +73,7 @@ function loopThrough(year) {
                 .select('line') //grab the tick line
                 .attr('class', 'highlighted') //style with a custom class and CSS
                 .style('stroke', '#6dc925')
-                .style('stroke-width', 1);
+                .style('stroke-width', .5 + 'px');
         })
 
 
@@ -150,8 +150,10 @@ function renderSlider(data) {
         .call(d3.axisBottom(x).ticks(responsive.ticks(data.length)).tickFormat(d3.timeFormat("%y")).tickSize(0));
     axisx.selectAll("line")
         .style("stroke", function() {
-            return 'white'
-        });
+            return 'gray'
+        })
+        // .style('x2', '100')
+        // .style('stroke-width', '.10')
 
     var dateRange = d3.selectAll('.dateRange')
     dateRange.style('width', width-margin.left + "px")

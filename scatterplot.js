@@ -62,7 +62,7 @@ var xAxis = d3.axisBottom()
 // .ticks(100)
 	// .ticks(data, function(d) { return d.year.length})
 	.scale(xScale)
-	.ticks(26)
+	.ticks(28)
 	.tickSize(height2)
 // 	.tickFormat(function (d) {
 // 		return xScale.tickFormat((mobileScreen ? 4 : 8),function(d) { 
@@ -70,7 +70,9 @@ var xAxis = d3.axisBottom()
 // 			return "$" + prefix.scale(d) + prefix.symbol;
 // 		})(d);
 // 	})	
-	;	
+
+
+// 	;	
 //Append the x-axis
 wrapper.append("g")
 	.attr("class", "x axis")
@@ -198,7 +200,7 @@ function showTooltip (d) {
 		.style("fill", function(d) {return "white";})
 	d3.selectAll('.scatterTooltip')
 		.style('background-color', 'rgba(0,0,0,.8)')
-		 .style("left", (d3.event.pageX-700) + "px")
+		 .style("left", (d3.event.pageX-(window.innerWidth/2)) + "px")
       .style("top", (d3.event.pageY) + "px")
 		.html(humanMonth(d.data.month) + ", "+ humanYear(d.data.year) + "</br> " + newData.monthSatelliteCount + " satellite images."  + "</br> " + "NDVI: " + formatNum(newData.ndvi))
 		
