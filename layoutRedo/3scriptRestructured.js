@@ -82,7 +82,6 @@ function loopThrough(year) {
 
 var overlay = d3.selectAll('.openingOverlay')
 overlay.style('width', window.innerWidth+'px')
-overlay.style('right', 0 +'px')
 overlay.style('height', window.innerHeight+50+'px')
        .style('border-right', 'solid .5px gray')
 // overlay.style('right', 0+'px')
@@ -106,7 +105,6 @@ overlay.style('height', window.innerHeight+50+'px')
 					.duration(500)
 					.style('right', newRight)
 					.style('border-right', 'dashed .5px gray')
-				// 	.style('width', window.innerWidth)
 
             overlay.active = active;
                     
