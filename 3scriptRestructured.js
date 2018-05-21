@@ -547,7 +547,7 @@ d3.csv("data/malawi_landsat_5_7_8_1990-2018.csv").then(function(data) {
             return "Drought"
         }
         else if (dateMarker == 01) {
-            return "Drought"
+            return "Drought/Food Crisis"
         }
         else { return "" }
     }
@@ -579,9 +579,9 @@ d3.csv("data/malawi_landsat_5_7_8_1990-2018.csv").then(function(data) {
         var agriculture = []
 
         function productivityAnnotations(dateMarker) {
-            if (dateMarker == 2001) {
+            if (dateMarker == 1998) {
                 return "Starter Pack Subsidy Program"
-            }
+            } 
             else { return "" }
         }
 
