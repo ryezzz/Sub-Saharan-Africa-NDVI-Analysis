@@ -589,6 +589,8 @@ d3.csv("data/malawi_landsat_5_7_8_1990-2018.csv").then(function(data) {
         function gdpAnnotations(dateMarker) {
             if (dateMarker == 2005) {
                 return "FISP Agricultural Subsidy"
+            } else if (dateMarker == 2010){
+                return "Macroeconomic Crisis"
             }
             else { return "" }
         }
