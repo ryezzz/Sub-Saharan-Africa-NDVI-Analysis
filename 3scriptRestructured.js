@@ -423,7 +423,7 @@ function renderlinechart(data) {
         .attr("width", width)
         .attr("height", height)
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-        .on("click", click)
+        .on("mousemove", click)
         .on("touchmove", click)
         // .on('mouseover', hover)
 
